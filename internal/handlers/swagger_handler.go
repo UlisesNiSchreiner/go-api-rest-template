@@ -55,7 +55,7 @@ func (h *SwaggerHandler) UI(w http.ResponseWriter, r *http.Request) {
 </html>`))
 }
 
-func (h *SwaggerHandler) Spec(w http.ResponseWriter, r *http.Request) {
+func (h *SwaggerHandler) Spec(w http.ResponseWriter, _ *http.Request) {
 	b, err := os.ReadFile(h.specPath)
 	if err != nil {
 		writeError(w, http.StatusInternalServerError, "unable to load openapi spec")

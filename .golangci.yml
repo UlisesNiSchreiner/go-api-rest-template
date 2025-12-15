@@ -1,18 +1,48 @@
+version: 2
+
 run:
   timeout: 5m
+  tests: true
 
 linters:
+  disable-all: true
   enable:
-    - errcheck
     - govet
     - staticcheck
     - ineffassign
+    - errorlint
+    - nilerr
+    - bodyclose
+    - unparam
+    - errcheck
     - revive
+
+formatters:
+  enable:
     - gofmt
     - goimports
 
+linters-settings:
+  revive:
+    severity: warning
+    rules:
+      - name: early-return
+      - name: errorf
+      - name: context-as-argument
+      - name: empty-block
+
 issues:
+  exclude-use-default: false
+
   exclude-rules:
+    # 🔴 revive NO aporta valor en servicios internos
+    - path: ^internal/
+      linters:
+        - revive
+
+    # Tests: menos ruido
     - path: _test\.go
       linters:
         - errcheck
+        - unparam
+        - bodyclose

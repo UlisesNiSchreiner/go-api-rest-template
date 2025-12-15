@@ -22,7 +22,7 @@ func (m mockRepo) GetByID(ctx context.Context, id int64) (domain.User, error) {
 func TestUserService_GetByID_OK(t *testing.T) {
 	expected := domain.User{ID: 7, Email: "a@b.com", Name: "Ada", CreatedAt: time.Unix(1, 0).UTC()}
 	svc := services.NewUserService(mockRepo{
-		getByID: func(ctx context.Context, id int64) (domain.User, error) {
+		getByID: func(_ context.Context, id int64) (domain.User, error) {
 			if id != 7 {
 				t.Fatalf("unexpected id: %d", id)
 			}
