@@ -1,6 +1,5 @@
-# Go REST API Template (Layered Architecture)
+# Go REST API Template
 
-[![CI](https://github.com/your-org/go-rest-layered-template/actions/workflows/ci.yml/badge.svg)](https://github.com/your-org/go-rest-layered-template/actions/workflows/ci.yml)
 [![Go Version](https://img.shields.io/badge/go-1.22+-blue.svg)](https://go.dev/)
 [![License](https://img.shields.io/badge/license-MIT-brightgreen.svg)](LICENSE)
 
