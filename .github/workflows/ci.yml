@@ -13,6 +13,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+
       - uses: actions/setup-go@v5
         with:
           go-version: '1.22'
@@ -33,13 +34,21 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+
       - uses: actions/setup-go@v5
         with:
           go-version: '1.22'
           cache: true
 
+      # Optional but recommended: fail if code is not properly formatted
+      - name: Formatting check
+        uses: golangci/golangci-lint-action@v6
+        with:
+          version: v2.7.2
+          args: fmt --diff
+
       - name: golangci-lint
         uses: golangci/golangci-lint-action@v6
         with:
-          version: v1.60.3
-          args: --timeout=5m
+          version: v2.7.2
+          args: run --timeout=5m
