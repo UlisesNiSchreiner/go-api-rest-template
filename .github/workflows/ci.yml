@@ -40,7 +40,7 @@ jobs:
           go-version: "1.22"
           cache: true
 
-      # ---------- FORMAT CHECK ----------
+      # ---- FORMAT CHECKS ----
       - name: gofmt check
         run: |
           test -z "$(gofmt -l .)"
@@ -50,7 +50,7 @@ jobs:
           go install golang.org/x/tools/cmd/goimports@latest
           test -z "$(goimports -l .)"
 
-      # ---------- LINT ----------
+      # ---- LINT ----
       - name: golangci-lint
         uses: golangci/golangci-lint-action@v7
         with:
