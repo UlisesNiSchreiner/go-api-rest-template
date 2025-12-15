@@ -42,13 +42,13 @@ jobs:
 
       # Optional but recommended: fail if code is not properly formatted
       - name: Formatting check
-        uses: golangci/golangci-lint-action@v6
+        uses: golangci/golangci-lint-action@v7
         with:
           version: v2.7.2
           args: fmt --diff
 
       - name: golangci-lint
-        uses: golangci/golangci-lint-action@v6
+        uses: golangci/golangci-lint-action@v7
         with:
           version: v2.7.2
           args: run --timeout=5m
