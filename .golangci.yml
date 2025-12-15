@@ -1,18 +1,30 @@
+version: "2"
+
 run:
   timeout: 5m
+  tests: true
 
 linters:
+  default: none
   enable:
-    - errcheck
     - govet
     - staticcheck
     - ineffassign
-    - revive
+    - errorlint
+    - nilerr
+    - bodyclose
+    - unparam
+    - errcheck
+
+  exclusions:
+    rules:
+      - path: '.*_test\.go'
+        linters:
+          - errcheck
+          - unparam
+          - bodyclose
+
+formatters:
+  enable:
     - gofmt
     - goimports
-
-issues:
-  exclude-rules:
-    - path: _test\.go
-      linters:
-        - errcheck

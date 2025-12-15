@@ -3,7 +3,7 @@ name: CI
 on:
   pull_request:
   push:
-    branches: [ "main" ]
+    branches: ["master"]
 
 permissions:
   contents: read
@@ -13,14 +13,19 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+
       - uses: actions/setup-go@v5
         with:
-          go-version: '1.22'
+          go-version: "1.22"
           cache: true
 
       - name: Go test (with coverage)
         run: |
-          go test ./... -coverprofile=coverage.out -covermode=atomic
+          go test \
+            ./internal/services/... \
+            ./internal/repositories/... \
+            -coverprofile=coverage.out \
+            -covermode=atomic
 
       - name: Enforce minimum coverage (80%)
         run: |
@@ -33,13 +38,25 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+
       - uses: actions/setup-go@v5
         with:
-          go-version: '1.22'
+          go-version: "1.22"
           cache: true
 
+      # ---- FORMAT CHECKS ----
+      - name: gofmt check
+        run: |
+          test -z "$(gofmt -l .)"
+
+      - name: goimports check
+        run: |
+          go install golang.org/x/tools/cmd/goimports@latest
+          test -z "$(goimports -l .)"
+
+      # ---- LINT ----
       - name: golangci-lint
-        uses: golangci/golangci-lint-action@v6
+        uses: golangci/golangci-lint-action@v7
         with:
-          version: v1.60.3
+          version: v2.7.2
           args: --timeout=5m

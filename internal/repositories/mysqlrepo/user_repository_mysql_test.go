@@ -18,7 +18,7 @@ func TestUserRepository_GetByID_OK(t *testing.T) {
 	if err != nil {
 		t.Fatalf("sqlmock.New: %v", err)
 	}
-	defer db.Close()
+	defer func() { _ = db.Close() }()
 
 	repo := mysqlrepo.NewUserRepository(db)
 
@@ -52,7 +52,7 @@ func TestUserRepository_GetByID_NotFound(t *testing.T) {
 	if err != nil {
 		t.Fatalf("sqlmock.New: %v", err)
 	}
-	defer db.Close()
+	defer func() { _ = db.Close() }()
 
 	repo := mysqlrepo.NewUserRepository(db)
 
