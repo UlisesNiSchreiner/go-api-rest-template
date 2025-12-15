@@ -1,11 +1,10 @@
-version: 2
+version: "2"
 
 run:
   timeout: 5m
   tests: true
 
 linters:
-  disable-all: true
   enable:
     # Bugs reales
     - govet
@@ -23,9 +22,7 @@ formatters:
     - goimports
 
 issues:
-  exclude-use-default: false
-
-  exclude-rules:
+  exclude:
     # Tests: no romper por defers, mocks, etc.
     - path: _test\.go
       linters:
