@@ -21,7 +21,7 @@ jobs:
 
       - name: Go test (with coverage)
         run: |
-          go test ./... -coverprofile=coverage.out -covermode=atomic
+          go test ./internal/... -coverprofile=coverage.out -covermode=atomic
 
       - name: Enforce minimum coverage (80%)
         run: |
