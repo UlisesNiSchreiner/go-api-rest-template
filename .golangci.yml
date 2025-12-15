@@ -5,8 +5,9 @@ run:
   tests: true
 
 linters:
+  # v2 replacement for "disable-all: true"
+  default: none
   enable:
-    # Bugs reales
     - govet
     - staticcheck
     - ineffassign
@@ -16,16 +17,16 @@ linters:
     - unparam
     - errcheck
 
+  # v2 way to exclude issues by path / per-linter
+  exclusions:
+    rules:
+      - path: '(.+)_test\.go'
+        linters:
+          - errcheck
+          - unparam
+          - bodyclose
+
 formatters:
   enable:
     - gofmt
     - goimports
-
-issues:
-  exclude:
-    # Tests: no romper por defers, mocks, etc.
-    - path: _test\.go
-      linters:
-        - errcheck
-        - unparam
-        - bodyclose
