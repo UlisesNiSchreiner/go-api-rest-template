@@ -5,7 +5,6 @@ run:
   tests: true
 
 linters:
-  # v2 replacement for "disable-all: true"
   default: none
   enable:
     - govet
@@ -17,10 +16,9 @@ linters:
     - unparam
     - errcheck
 
-  # v2 way to exclude issues by path / per-linter
   exclusions:
     rules:
-      - path: '(.+)_test\.go'
+      - path: '.*_test\.go'
         linters:
           - errcheck
           - unparam
