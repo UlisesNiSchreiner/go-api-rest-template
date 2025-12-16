@@ -28,6 +28,45 @@ Sample endpoints:
 
 ---
 
+## Template initialization
+
+This repository is meant to be used as a **project template**.
+
+Before starting development, you should initialize it with your own module name.  
+This will update the Go module (`go.mod`) and replace template references in the README.
+
+### Initialize the template
+
+From the root of the repository, run:
+
+```bash
+go run scripts/init-template.go github.com/your-org/your-project
+```
+
+Example:
+
+```bash
+go run scripts/init-template.go github.com/acme/users-api
+```
+
+This will:
+
+- Update the `module` name in `go.mod`
+- Replace template references in `README.md`
+- Prepare the project for first use
+
+### After initialization
+
+```bash
+go mod tidy
+git init
+git commit -m "init project"
+```
+
+After that, the project is ready for development.
+
+---
+
 ## Quick start (local, without Docker)
 
 1) Export environment variables:
@@ -59,8 +98,6 @@ open http://localhost:8080/swagger
 
 ### MySQL schema
 
-The `users` endpoint expects:
-
 ```sql
 CREATE TABLE users (
   id BIGINT PRIMARY KEY AUTO_INCREMENT,
@@ -74,51 +111,24 @@ CREATE TABLE users (
 
 ## Development mode (watch changes)
 
-This template uses **Air** for rebuild/restart on file changes:
-
 ```bash
 make dev
 ```
-
-`make dev` installs `air` into `./bin/` automatically.
 
 ---
 
 ## Docker
 
-### Build and run
-
 ```bash
 docker build -t go-rest-template .
-docker run --rm -p 8080:8080 \
-  -e APP_ENV=prod \
-  -e HTTP_HOST=0.0.0.0 \
-  -e HTTP_PORT=8080 \
-  -e MYSQL_DSN="user:password@tcp(host.docker.internal:3306)/app?parseTime=true" \
-  go-rest-template
-```
-
-### Optional: local MySQL via docker-compose
-
-```bash
-docker compose up -d mysql
 ```
 
 ---
 
 ## Tests and coverage
 
-Run tests:
-
 ```bash
 go test ./...
-```
-
-Coverage report:
-
-```bash
-make test
-make cover
 ```
 
 CI enforces a **minimum 80% coverage** on pull requests.
@@ -128,27 +138,15 @@ CI enforces a **minimum 80% coverage** on pull requests.
 ## Project structure
 
 ```
-cmd/api/                         # main entrypoint
-internal/config/                 # env-based configuration
-internal/domain/                 # domain models
-internal/handlers/               # HTTP handlers + middleware
-internal/services/               # business logic
-internal/repositories/           # repository interfaces
-internal/repositories/mysqlrepo/ # MySQL repositories (database/sql)
-internal/platform/db/            # DB bootstrap (sql.DB)
-internal/logger/                 # zap logger wrapper
+cmd/api/
+internal/
 ```
 
 ---
 
 ## CI
 
-GitHub Actions runs:
-
-- `go test` with coverage + coverage gate
-- `golangci-lint` static analysis
-
-See `.github/workflows/ci.yml`.
+GitHub Actions runs tests, coverage and lint.
 
 ---
 
