@@ -1,6 +1,7 @@
 # Go REST API Template
 
 [![Go Version](https://img.shields.io/badge/go-1.22+-blue.svg)](https://go.dev/)
+[![CI](https://github.com/UlisesNiSchreiner/go-api-rest-template/actions/workflows/ci.yml/badge.svg)](https://github.com/UlisesNiSchreiner/go-api-rest-template/actions/workflows/ci.yml)
 [![License](https://img.shields.io/badge/license-MIT-brightgreen.svg)](LICENSE)
 
 A market-ready starting point for REST APIs in Go using a pragmatic layered architecture:
