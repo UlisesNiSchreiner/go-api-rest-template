@@ -28,6 +28,45 @@ Sample endpoints:
 
 ---
 
+## Template initialization
+
+This repository is meant to be used as a **project template**.
+
+Before starting development, you should initialize it with your own module name.  
+This will update the Go module (`go.mod`) and replace template references in the README.
+
+### Initialize the template
+
+From the root of the repository, run:
+
+```bash
+go run scripts/init-template.go github.com/your-org/your-project
+```
+
+Example:
+
+```bash
+go run scripts/init-template.go github.com/acme/users-api
+```
+
+This will:
+
+- Update the `module` name in `go.mod`
+- Replace template references in `README.md`
+- Prepare the project for first use
+
+### After initialization
+
+```bash
+go mod tidy
+git init
+git commit -m "init project"
+```
+
+After that, the project is ready for development.
+
+---
+
 ## Quick start (local, without Docker)
 
 1) Export environment variables:
