@@ -98,6 +98,8 @@ open http://localhost:8080/swagger
 
 ### MySQL schema
 
+The `users` endpoint expects:
+
 ```sql
 CREATE TABLE users (
   id BIGINT PRIMARY KEY AUTO_INCREMENT,
@@ -111,24 +113,51 @@ CREATE TABLE users (
 
 ## Development mode (watch changes)
 
+This template uses **Air** for rebuild/restart on file changes:
+
 ```bash
 make dev
 ```
+
+`make dev` installs `air` into `./bin/` automatically.
 
 ---
 
 ## Docker
 
+### Build and run
+
 ```bash
 docker build -t go-rest-template .
+docker run --rm -p 8080:8080 \
+  -e APP_ENV=prod \
+  -e HTTP_HOST=0.0.0.0 \
+  -e HTTP_PORT=8080 \
+  -e MYSQL_DSN="user:password@tcp(host.docker.internal:3306)/app?parseTime=true" \
+  go-rest-template
+```
+
+### Optional: local MySQL via docker-compose
+
+```bash
+docker compose up -d mysql
 ```
 
 ---
 
 ## Tests and coverage
 
+Run tests:
+
 ```bash
 go test ./...
+```
+
+Coverage report:
+
+```bash
+make test
+make cover
 ```
 
 CI enforces a **minimum 80% coverage** on pull requests.
@@ -138,15 +167,27 @@ CI enforces a **minimum 80% coverage** on pull requests.
 ## Project structure
 
 ```
-cmd/api/
-internal/
+cmd/api/                         # main entrypoint
+internal/config/                 # env-based configuration
+internal/domain/                 # domain models
+internal/handlers/               # HTTP handlers + middleware
+internal/services/               # business logic
+internal/repositories/           # repository interfaces
+internal/repositories/mysqlrepo/ # MySQL repositories (database/sql)
+internal/platform/db/            # DB bootstrap (sql.DB)
+internal/logger/                 # zap logger wrapper
 ```
 
 ---
 
 ## CI
 
-GitHub Actions runs tests, coverage and lint.
+GitHub Actions runs:
+
+- `go test` with coverage + coverage gate
+- `golangci-lint` static analysis
+
+See `.github/workflows/ci.yml`.
 
 ---
 
